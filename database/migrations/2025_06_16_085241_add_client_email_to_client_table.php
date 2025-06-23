@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('client_table', function (Blueprint $table) {
-            $table->string('client_email')->after('client_name');
-        });
+        // Column is already added in the create_client_table migration
+        // Skipping to avoid duplicate column error
+        if (!Schema::hasColumn('client_table', 'client_email')) {
+            Schema::table('client_table', function (Blueprint $table) {
+                $table->string('client_email')->after('client_name');
+            });
+        }
     }
 
     /**

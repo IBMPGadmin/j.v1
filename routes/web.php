@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\JurisUserTextController;
+use App\Http\Controllers\GovernmentLinkController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,11 @@ Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Ht
     Route::patch('/admin/users/{user}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.delete');
 
+    // Government Links routes
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('government-links', \App\Http\Controllers\GovernmentLinkController::class);
+    });
+
     // Add Legal Documents page
     Route::get('/admin/legal-documents/add', function () {
         return view('admin.users.add-legal-documents');
@@ -48,6 +54,10 @@ Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Ht
     Route::get('/home', [ClientController::class, 'home'])->name('home');
     Route::get('/templates', [ClientController::class, 'viewTemplates'])->name('templates');
     Route::get('/legal-tables/{id}', [ClientController::class, 'viewLegalTable'])->name('client.legalTables.view');
+    
+    // Government Links routes for users
+    Route::get('/government-links', [App\Http\Controllers\UserGovernmentLinksController::class, 'index'])->name('user.government-links');
+    Route::get('/government-links/{category}', [App\Http\Controllers\UserGovernmentLinksController::class, 'showCategory'])->name('user.government-links.category');
     
     // Legal table view and annotation routes
     Route::get('/view-legal-table', [App\Http\Controllers\ViewLegalTableController::class, 'show'])->name('view-legal-table');

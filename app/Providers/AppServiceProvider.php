@@ -25,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('processContent', function ($expression) {
             return "<?php echo App\Helpers\LegalReferenceHelper::processContent($expression); ?>";
         });
+        
+        // Use bootstrap-4 for pagination
+        \Illuminate\Pagination\Paginator::useBootstrap();
     }
 }

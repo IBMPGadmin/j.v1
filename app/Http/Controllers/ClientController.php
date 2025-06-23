@@ -1,15 +1,42 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Client;
 
+use App\Models\LegalDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 
 class ClientController extends Controller
-{
-    public function store(Request $request)
+{    public function store(Request $request)
     {
-        // Implementation for storing client
+        // Validate the request
+        $request->validate([
+            'client_name' => 'required|string|max:255',
+            'client_email' => 'required|email|max:255',
+            'client_status' => 'required|in:Active,Inactive',
+        ]);        try {
+            // Create a new client
+            $client = Client::create([
+                'client_name' => $request->client_name,
+                'client_email' => $request->client_email,
+                'client_status' => $request->client_status,
+                'user_id' => Auth::id(),
+                'last_accessed' => now(),
+            ]);
+
+            return redirect()->route('user.dashboard')
+                ->with('success', 'Client added successfully!');
+        } catch (\Exception $e) {
+            // Log the error
+            \Illuminate\Support\Facades\Log::error('Error adding client: ' . $e->getMessage());
+            
+            return redirect()->route('user.dashboard')
+                ->with('error', 'Failed to add client. Please try again.');
+        }
     }
 
     public function selectClient(Request $request)
@@ -27,16 +54,14 @@ class ClientController extends Controller
     {
         // Implementation for templates view
         return view('templates');
-    }
-
-    public function viewLegalTable($id, Request $request)
+    }    public function viewLegalTable($id, Request $request)
     {
-        $legalTable = \App\Models\LegalDocument::findOrFail($id);
+        $legalTable = LegalDocument::findOrFail($id);
         
         // Get client info if client_id provided
         $client = null;
         if ($request->has('client_id')) {
-            $client = \App\Models\Client::find($request->client_id);
+            $client = Client::find($request->client_id);
         }
         
         // Get the table data with pagination
@@ -71,7 +96,7 @@ class ClientController extends Controller
     {
         try {
             // Find the legal table
-            $legalTable = \App\Models\LegalDocument::findOrFail($tableId);
+            $legalTable = LegalDocument::findOrFail($tableId);
             $tableName = $legalTable->table_name;
             
             // Decode the section reference

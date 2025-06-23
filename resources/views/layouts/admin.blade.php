@@ -19,6 +19,54 @@
   <link rel="stylesheet" href="{{ asset('admin/texteditor/assets/css/form_styles.css') }}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
+    <!-- Custom Pagination Styles -->
+  <style>
+    .pagination {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .pagination .page-item {
+      margin: 0 3px;
+    }
+    .pagination .page-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 36px;
+      padding: 6px 12px;
+      text-decoration: none;
+      border-radius: 4px;
+      color: #444;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      transition: all 0.2s ease;
+    }
+    .pagination .page-item.active .page-link {
+      background-color: #4680ff;
+      color: white;
+      border: 1px solid #4680ff;
+      box-shadow: 0 2px 6px rgba(70, 128, 255, 0.2);
+    }
+    .pagination .page-item.disabled .page-link {
+      color: #aaa;
+      background-color: #f5f5f5;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .pagination .page-link:hover:not(.disabled) {
+      background-color: #e9ecef;
+      border-color: #d0d0d0;
+      z-index: 2;
+    }
+    .pagination .page-link:focus {
+      box-shadow: 0 0 0 0.2rem rgba(70, 128, 255, 0.25);
+      z-index: 3;
+    }
+  </style>
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
 <style>.img-fluid { max-width: 100%; height: 50px !important; }</style>
@@ -54,7 +102,15 @@
             <li class="pc-item"><a class="pc-link" href="#">All Legal Documents</a></li>
             <li class="pc-item"><a class="pc-link" href="#">Add Forms & Schedule</a></li>
           </ul>
+        </li>        <li class="pc-item pc-hasmenu">          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">Resource pages</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.government-links.index') }}">Government Links</a></li>
+          </ul>
         </li>
+
+
+
+
         <li class="pc-item pc-hasmenu">
           <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">All Reports</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
           <ul class="pc-submenu">
