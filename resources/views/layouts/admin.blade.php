@@ -105,6 +105,8 @@
         </li>        <li class="pc-item pc-hasmenu">          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">Resource pages</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
           <ul class="pc-submenu">
             <li class="pc-item"><a class="pc-link" href="{{ route('admin.government-links.index') }}">Government Links</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.rcic-deadlines.index') }}">RCIC Deadlines</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.legal-key-terms.index') }}">Legal key terms</a></li>
           </ul>
         </li>
 

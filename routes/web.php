@@ -31,6 +31,8 @@ Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Ht
     // Government Links routes
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('government-links', \App\Http\Controllers\GovernmentLinkController::class);
+        Route::resource('rcic-deadlines', \App\Http\Controllers\RCICDeadlineController::class);
+        Route::resource('legal-key-terms', \App\Http\Controllers\LegalKeyTermController::class);
     });
 
     // Add Legal Documents page
@@ -47,6 +49,12 @@ Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Ht
     Route::get('/user-dashboard', function () {
         return view('user-dashboard');
     })->name('user.dashboard');
+
+    // RCIC Deadlines for users
+    Route::get('/rcic-deadlines', [App\Http\Controllers\User\RCICDeadlineController::class, 'index'])->name('user.rcic-deadlines.index');
+    
+    // Legal Key Terms for users
+    Route::get('/legal-key-terms', [App\Http\Controllers\User\LegalKeyTermController::class, 'index'])->name('user.legal-key-terms.index');
 
     // Client routes
     Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
