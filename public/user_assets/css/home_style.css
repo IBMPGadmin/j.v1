@@ -1,0 +1,198 @@
+.bg_custom{
+    background-color: var(--color-content-bg-opacity);
+}
+
+.act-container {
+    padding: 2rem;
+}
+
+.act-card {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.bg-dark-blue {
+    background-color: #295095;
+}
+
+
+.act-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.act-card-inner {
+    padding: 1.5rem;
+}
+
+.act-icon {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.act-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.act-category,
+.act-law,
+.act-jurisdiction,
+.act-description {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.view-button {
+    color: #007bff;
+    font-weight: bold;
+    text-align: right;
+}
+
+.no-results {
+    text-align: center;
+    color: #6c757d;
+    padding: 2rem;
+}
+
+.highlight {
+    background-color: #fff3cd;
+    padding: 0.2rem;
+}
+
+
+.act-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 2rem;
+}
+
+.btn-reset {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+/* Grid View */
+.act-content.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusts based on screen width */
+    gap: 20px; /* Adds consistent gap between items */
+}
+
+.act-content.grid-view .act-card {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+}
+
+.act-content.grid-view .act-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* List View */
+.act-content.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds spacing between list items */
+}
+
+.act-content.list-view .act-card {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+}
+
+.act-content.list-view .act-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Inner Content */
+.act-card-inner {
+    padding: 1rem;
+}
+
+.act-home-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.act-category,
+.act-law,
+.act-jurisdiction,
+.act-description {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.view-button {
+    color: #007bff;
+    font-weight: bold;
+    text-align: right;
+}
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Space between buttons */
+}
+
+.btn-custom {
+    background-color: var(--color-theme-2) !important;
+    border-color: var(--color-theme-2) !important;
+    color: var(--color-sidebar) !important;
+}
+.btn-reset {
+    background-color: white;
+    color: var(--color-danger) !important;
+    border: 1px solid white;
+}
+
+.btn-reset:hover {
+    background-color: var(--color-danger) !important;
+    color: var(--color-content-bg) !important;
+}
+
+.submit_reset_format{
+    width: 100%;
+}
+
+.header_style{
+    background-color: white;
+    color: #0d6efd;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    text-align: center;
+}
+
+:root {
+    /* Base Colors */
+    --color-sidebar: #254159;
+    --color-theme-1: #30838C;
+    --color-theme-2: #36D9AB;
+    --color-table-header: #5c7f9d;
+    --color-content-bg: #f2f2f2;
+    --color-danger: #f10505;
+
+    /* 90% Opacity Colors */
+    --color-sidebar-opacity: rgba(37, 65, 89, 0.9);
+    --color-theme-1-opacity: rgba(48, 131, 140, 0.9);
+    --color-theme-2-opacity: rgba(54, 217, 171, 0.9);
+    --color-table-header-opacity: rgba(92, 127, 157, 0.9);
+    --color-content-bg-opacity: rgba(242, 242, 242, 0.9);
+    --color-danger-opacity: rgba(241, 5, 5, 0.9);
+}
