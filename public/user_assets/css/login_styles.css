@@ -1,0 +1,363 @@
+.userLogin{
+  height: 100vh;
+  background-color: #254159;
+}
+
+.userLogin .login-card {
+  overflow: hidden;
+  border-radius: 0px;
+  padding: 0;
+  background-color: #30828d;
+  color: white;
+  box-shadow: 2px 2px 25px #090909;
+  border: none;
+}
+
+.userLogin .login-card .form-control {
+  background-color: #f2f2f2;
+  border-color: #f2f2f2;
+  color: #254159;
+}
+
+.userLogin .login-card .form-control::placeholder {
+  color: #9DACB9;
+}
+
+.userLogin .login-card .btn-primary {
+  background-color: #254159;
+  border-color: #254159;
+  border-radius: 10px;
+  margin-top: 30px;
+margin-bottom: 25px;
+}
+
+.userLogin .login-card .btn-primary:hover {
+  background-color: #254159;
+  border-color: #254159;
+}
+
+.userLogin .side-image {
+  background-image: url('../img/vancouver-aerial-sunset.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* .userLogin .login-card .loginLogo img{
+  width:100%;
+  height:auto;
+} */
+
+.userLogin .login-card .row {
+  margin: 0;
+  border-radius: 25px 25px 0 0; /* Matches the card's rounded corners */
+  overflow: hidden;
+}
+
+.userLogin .login-card .col-3,
+.userLogin .login-card .col-9 {
+  padding: 0;
+}
+
+.userLogin .login-card .col-3 {
+  background: #262626;
+}
+
+.userLogin .login-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.userLogin .login-card h2 {
+  color: #254159;
+}
+
+.userLogin .form-check-input[type="checkbox"]{
+border-radius :0;
+}
+
+.userLogin .login-card .links{
+margin-top: 5px;
+}
+.userLogin .login-card .links p{
+margin-bottom: 0;
+}
+
+.userLogin .login-card .form-check-label a,
+.userLogin .login-card .links a{
+color: #34b89f;
+}
+
+.userLogin .input-group-text {
+background-color: #254159; /* Match input field background */
+border: none; /* Remove default border */
+color: #f2f2f2; /* Icon color */
+}
+
+.userLogin .input-group .form-control {
+border-left: none; /* Remove left border where the icon connects */
+}
+
+.userLogin .input-group .form-control::placeholder {
+color: #9DACB9; /* Placeholder color */
+}
+
+.userLogin .input-group .key-icon {
+transform: rotate(-30deg); /* Rotate the key head */
+transition: transform 0.3s ease; /* Smooth transition for hover or focus effects */
+color: #f2f2f2; /* Custom color (optional) */
+}
+
+/* Default checkbox appearance */
+.form-check-input {
+appearance: none; /* Remove default browser styling */
+width: 20px;
+height: 20px;
+border: 2px solid #9DACB9; /* Default border color */
+border-radius: 4px; /* Rounded corners */
+/* background-color: transparent; Default background */
+cursor: pointer;
+transition: all 0.3s ease; /* Smooth transition for hover/focus */
+}
+
+/* Checkbox checked state */
+.form-check-input:checked {
+background-color: #254159; /* Light blue changes to #254159 */
+border-color: #254159; /* Change border color */
+}
+
+/* Optional focus state */
+.form-check-input:focus {
+box-shadow: 0 0 0 2px rgba(37, 65, 89, 0.5); /* Add a subtle focus outline */
+}
+
+
+/* Error message styling */
+.userLogin .login-error {
+background-color: #ff4d4d;  /* Bright red background */
+color: white;  /* White text */
+border: none;  /* Remove default border */
+border-radius: 5px;  /* Slight rounded corners */
+padding: 10px 15px;  /* Comfortable padding */
+margin-bottom: 20px;  /* Space below the error message */
+text-align: center;  /* Center the text */
+font-weight: bold;  /* Make the text bold */
+box-shadow: 0 2px 5px rgba(0,0,0,0.2);  /* Subtle shadow */
+animation: shake 0.5s;  /* Add a shake animation */
+}
+
+/* Shake animation for error message */
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+
+/* .side-widgets {
+position: absolute;
+top: 20px;
+right: 20px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 10px;
+padding: 15px;
+color: white;
+min-width: 250px;
+}
+.weather-icon {
+max-width: 50px;
+margin-right: 10px;
+}
+.datetime-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+} */
+
+
+
+
+/* signup page css */
+
+.userSignup {
+  height: 100vh;
+  background-color: #254159;
+}
+.userSignup .signup-card {
+overflow: hidden;
+border-radius: 25px;
+padding: 0;
+background-color: #30828d;
+color: white;
+box-shadow: 2px 2px 25px #090909;
+border: none;
+}
+.userSignup .signup-card .form-control {
+background-color: #f2f2f2;
+border-color: #f2f2f2;
+color: #254159;
+}
+.userSignup .signup-card .form-control::placeholder {
+color: #9DACB9;
+}
+.userSignup .signup-card .btn-primary {
+background-color: #254159;
+border-color: #254159;
+border-radius: 10px;
+}
+.userSignup .signup-card .btn-primary:hover {
+background-color: #254159;
+border-color: #254159;
+}
+.userSignup .side-image {
+background-image: url('../img/vancouver-aerial-sunset.webp');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
+.userSignup .signup-card .row {
+margin: 0;
+border-radius: 25px 25px 0 0;
+overflow: hidden;
+}
+.userSignup .signup-card .col-3,
+.userSignup .signup-card .col-9 {
+padding: 0;
+}
+.userSignup .signup-card .col-3 {
+background: #262626;
+}
+.userSignup .signup-card img {
+max-width: 100%;
+height: auto;
+}
+.userSignup .signup-card h2 {
+color: #254159;
+}
+.userSignup .signup-card .links {
+margin-top: 5px;
+}
+.userSignup .signup-card .links a {
+color: #254159;
+}
+
+.userSignup .signup-card .input-group-text {
+background-color: #254159;
+border: none; /* Remove border */
+color: #f2f2f2; /* Icon color */
+display: flex;
+align-items: center;
+justify-content: center;
+height: 38px;
+}
+
+.userSignup .signup-card .input-group .form-control {
+border-left: none; /* Remove border between icon and input field */
+background-color: #f2f2f2; /* Match input background color */
+}
+
+.userSignup .signup-card .input-group .form-control::placeholder {
+color: #9DACB9; /* Placeholder text color */
+}
+
+.userSignup .signup-card .input-group-text svg {
+color: #f2f2f2; /* Icon color */
+width: 20px; /* Adjust icon size */
+height: 20px; /* Adjust icon size */
+}
+
+.userSignup .signup-card .links a {
+color: #34b89f;
+}
+
+/* Password Recover page */
+
+.recoverPassword {
+height: 100vh;
+}
+.recoverPassword .recovery-card {
+overflow: hidden;
+border-radius: 25px;
+padding: 0;
+background-color: #30828d;
+color: white;
+box-shadow: 2px 2px 25px #090909;
+border: none;
+}
+.recoverPassword .recovery-card .form-control {
+background-color: #f2f2f2;
+border-color: #f2f2f2;
+color: #254159;
+}
+.recoverPassword .recovery-card .form-control::placeholder {
+color: #9DACB9;
+}
+.recoverPassword .recovery-card .btn-primary {
+background-color: #254159;
+border-color: #254159;
+border-radius: 10px;
+}
+.recoverPassword .recovery-card .btn-primary:hover {
+background-color: #254159;
+border-color: #254159;
+}
+.recoverPassword .side-image {
+background-image: url('../img/vancouver-aerial-sunset.webp');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
+.recoverPassword .recovery-card .row {
+margin: 0;
+border-radius: 25px 25px 0 0;
+overflow: hidden;
+}
+.recoverPassword .recovery-card .col-3,
+.recoverPassword .recovery-card .col-9 {
+padding: 0;
+}
+.recoverPassword .recovery-card .col-3 {
+background: #262626;
+}
+.recoverPassword .recovery-card img {
+max-width: 100%;
+height: auto;
+}
+.recoverPassword .recovery-card h2 {
+color: #254159;
+}
+.recoverPassword .recovery-card .links {
+margin-top: 5px;
+}
+.recoverPassword .recovery-card .links a {
+color: #254159;
+}
+
+.recoverPassword .recovery-card .input-group-text {
+background-color: #254159;
+border: none; /* Remove border */
+color: #f2f2f2; /* Icon color */
+display: flex;
+align-items: center;
+justify-content: center;
+height: 38px;
+}
+
+.recoverPassword .recovery-card .input-group .form-control {
+border-left: none; /* Remove border between icon and input field */
+background-color: #f2f2f2; /* Match input background color */
+}
+
+.recoverPassword .recovery-card .input-group .form-control::placeholder {
+color: #9DACB9; /* Placeholder text color */
+}
+
+.recoverPassword .recovery-card .input-group-text svg {
+color: #f2f2f2; /* Icon color */
+width: 20px; /* Adjust icon size */
+height: 20px; /* Adjust icon size */
+}
+
+.recoverPassword .recovery-card .links a {
+color: #34b89f;
+}

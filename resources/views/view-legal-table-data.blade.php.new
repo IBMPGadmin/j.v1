@@ -1,0 +1,374 @@
+@extends('layouts.user-layout')
+
+@section('content')
+<div class="container-fluid">
+    <div class="row">
+        <!-- Main Content Area -->
+        <div class="col-lg-8 col-md-7">
+            <h2>Table: {{ $legalTable->table_name }}</h2>
+            <h4>({{ $legalTable->act_name ?? '' }})</h4>
+            @if(isset($client) && $client)
+                <div class="alert alert-info mb-3">
+                    <strong>Client:</strong> {{ $client->client_name ?? 'N/A' }}<br>
+                    <strong>Email:</strong> {{ $client->client_email ?? 'N/A' }}<br>
+                    <strong>Status:</strong> {{ $client->client_status ?? 'N/A' }}
+                </div>
+            @endif
+            @if(empty($columns))
+                <div class="alert alert-warning mt-4">No data found in this table.</div>
+            @else
+            <!-- Keyword Search Section -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Keyword Search</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('client.legalTables.view', $legalTable->id) }}" method="GET" class="mb-3">
+                        @if(isset($client) && $client)
+                            <input type="hidden" name="client_id" value="{{ $client->id }}">
+                        @endif
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Content Display Area -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Legal Content</h5>
+                </div>
+                <div class="card-body" id="legal-content-area">
+
+                    @php
+                        // Group data by part, division, sub_division, section, etc.
+                        $hierarchy = [];
+                        foreach ($tableData as $row) {
+                            $part = $row->part ?? 'General';
+                            $division = $row->division ?? null;
+                            $sub_division = $row->sub_division ?? null;
+                            $section = $row->section ?? null;
+                            $sub_section = $row->sub_section ?? null;
+                            $paragraph = $row->paragraph ?? null;
+                            $sub_paragraph = $row->sub_paragraph ?? null;
+                            $hierarchy[$part][$division][$sub_division][$section][$sub_section][$paragraph][$sub_paragraph][] = $row;
+                        }
+                    @endphp
+                    
+                    <!-- Hierarchical Legal Structure -->
+                    @foreach($hierarchy as $partNum => $divisions)
+                        <div class="legal-section part-section mb-4">
+                            <h3 class="clickable-heading" data-section-type="part" data-section-id="{{ $partNum }}">
+                                Part {{ $partNum }}
+                            </h3>
+                            <div class="legal-content pl-4">
+                                @foreach($divisions as $divisionNum => $subDivisions)
+                                    @if($divisionNum)
+                                        <div class="legal-section division-section mb-3">
+                                            <h4 class="clickable-heading" data-section-type="division" data-section-id="{{ $divisionNum }}">
+                                                Division {{ $divisionNum }}
+                                            </h4>
+                                            <div class="legal-content pl-4">
+                                    @endif
+                                    
+                                    @foreach($subDivisions as $subDivNum => $sections)
+                                        @if($subDivNum)
+                                            <div class="legal-section subdivision-section mb-3">
+                                                <h5 class="clickable-heading" data-section-type="subdivision" data-section-id="{{ $subDivNum }}">
+                                                    Subdivision {{ $subDivNum }}
+                                                </h5>
+                                                <div class="legal-content pl-4">
+                                        @endif
+                                        
+                                        @foreach($sections as $sectionNum => $subSections)
+                                            @if($sectionNum)
+                                                <div class="legal-section section-section mb-2">
+                                                    <h6 class="clickable-heading" data-section-type="section" data-section-id="{{ $sectionNum }}">
+                                                        Section {{ $sectionNum }}
+                                                    </h6>
+                                                    <div class="legal-content pl-4">
+                                            @endif
+                                            
+                                            @foreach($subSections as $subSectionNum => $paragraphs)
+                                                @if($subSectionNum)
+                                                    <div class="legal-section subsection-section mb-2">
+                                                        <div class="clickable-heading" data-section-type="subsection" data-section-id="{{ $subSectionNum }}">
+                                                            <strong>Subsection {{ $subSectionNum }}</strong>
+                                                        </div>
+                                                        <div class="legal-content pl-4">
+                                                @endif
+                                                
+                                                @foreach($paragraphs as $paraNum => $subParas)
+                                                    @if($paraNum)
+                                                        <div class="legal-section paragraph-section mb-2">
+                                                            <div class="clickable-heading" data-section-type="paragraph" data-section-id="{{ $paraNum }}">
+                                                                <strong>Paragraph {{ $paraNum }}</strong>
+                                                            </div>
+                                                            <div class="legal-content pl-4">
+                                                    @endif
+                                                    
+                                                    @foreach($subParas as $subParaNum => $rows)
+                                                        @if($subParaNum)
+                                                            <div class="legal-section subparagraph-section mb-2">
+                                                                <div class="clickable-heading" data-section-type="subparagraph" data-section-id="{{ $subParaNum }}">
+                                                                    <strong>Sub-paragraph {{ $subParaNum }}</strong>
+                                                                </div>
+                                                                <div class="legal-content pl-4">
+                                                        @endif
+                                                        
+                                                        @foreach($rows as $row)
+                                                            <div class="legal-text mb-2" data-row-id="{{ $row->id ?? '' }}">
+                                                                @if(!empty($row->title))<strong>{{ $row->title }}</strong><br>@endif
+                                                                
+                                                                @if(!empty($row->text_content))
+                                                                    <span id="content-{{ $row->id ?? 'unknown' }}" class="legal-content-text">{!! $row->text_content !!}</span>
+                                                                    <script>
+                                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                                            const contentElement = document.getElementById('content-{{ $row->id ?? 'unknown' }}');
+                                                                            if (contentElement) {
+                                                                                // Original text content
+                                                                                const originalText = contentElement.innerHTML;
+                                                                                
+                                                                                // Process pattern 1: section X references
+                                                                                let processedText = originalText.replace(
+                                                                                    /\b(section|sections)\s+(\d+(?:\.\d+)?)\b/gi,
+                                                                                    '<span class="ref" data-section-id="$2" data-table-id="{{ $legalTable->id }}">$1 $2</span>'
+                                                                                );
+                                                                                
+                                                                                // Process pattern 2: paragraph references
+                                                                                processedText = processedText.replace(
+                                                                                    /\b(paragraph|paragraphs)\s+\(([a-z\d\.]+)\)(?:\s+or\s+\(([a-z\d\.]+)\))?/gi,
+                                                                                    function(match, type, firstRef, secondRef) {
+                                                                                        let result = '<span class="ref" data-section-id="{{ $row->section ?? "" }}(' + firstRef + ')" data-table-id="{{ $legalTable->id }}">' + type + ' (' + firstRef + ')</span>';
+                                                                                        
+                                                                                        if (secondRef) {
+                                                                                            result += ' or <span class="ref" data-section-id="{{ $row->section ?? "" }}(' + secondRef + ')" data-table-id="{{ $legalTable->id }}">(' + secondRef + ')</span>';
+                                                                                        }
+                                                                                        
+                                                                                        return result;
+                                                                                    }
+                                                                                );
+                                                                                
+                                                                                // Process pattern 3: subsection references
+                                                                                processedText = processedText.replace(
+                                                                                    /\b(subsection|subsections)\s+\((\d+(?:\.\d+)?)\)(?:\s+or\s+\((\d+(?:\.\d+)?)\))?/gi,
+                                                                                    function(match, type, firstRef, secondRef) {
+                                                                                        let result = '<span class="ref" data-section-id="{{ $row->section ?? "" }}(' + firstRef + ')" data-table-id="{{ $legalTable->id }}">' + type + ' (' + firstRef + ')</span>';
+                                                                                        
+                                                                                        if (secondRef) {
+                                                                                            result += ' or <span class="ref" data-section-id="{{ $row->section ?? "" }}(' + secondRef + ')" data-table-id="{{ $legalTable->id }}">(' + secondRef + ')</span>';
+                                                                                        }
+                                                                                        
+                                                                                        return result;
+                                                                                    }
+                                                                                );
+                                                                                
+                                                                                // Process pattern 4: complex section references like 279.1(2)
+                                                                                processedText = processedText.replace(
+                                                                                    /\b(\d+(?:\.\d+)?(?:\([^)]+\)){1,4})\b(?!\s*\([a-z](?:\.\d+)?\))(?![^<>]*<\/span>)/g,
+                                                                                    '<span class="ref" data-section-id="$1" data-table-id="{{ $legalTable->id }}">$1</span>'
+                                                                                );
+                                                                                
+                                                                                // Process pattern 5: explicit section references
+                                                                                processedText = processedText.replace(
+                                                                                    /\b(section|subsection|paragraph)\s+(\d+(?:\.\d+)?)\((\d+(?:\.\d+)?)\)(?:\(([a-z\d\.]+)\))?/gi,
+                                                                                    function(match, type, section, subsection, paragraph) {
+                                                                                        let sectionId = section + '(' + subsection + ')';
+                                                                                        if (paragraph) {
+                                                                                            sectionId += '(' + paragraph + ')';
+                                                                                        }
+                                                                                        
+                                                                                        return '<span class="ref" data-section-id="' + sectionId + '" data-table-id="{{ $legalTable->id }}">' + match + '</span>';
+                                                                                    }
+                                                                                );
+                                                                                
+                                                                                // Update the content with processed text
+                                                                                contentElement.innerHTML = processedText;
+                                                                            }
+                                                                        });
+                                                                    </script>
+                                                                @endif
+                                                                @if(!empty($row->footnote))<div class="footnote"><em>{!! $row->footnote !!}</em></div>@endif
+                                                            </div>
+                                                        @endforeach
+                                                        
+                                                        @if($subParaNum)
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                    
+                                                    @if($paraNum)
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                                
+                                                @if($subSectionNum)
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                            
+                                            @if($sectionNum)
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                        
+                                        @if($subDivNum)
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                    
+                                    @if($divisionNum)
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+              <div class="d-flex justify-content-center mt-4">
+                {!! $tableData->appends(request()->query())->links() !!}
+            </div>
+            
+            <!-- Test button for modal -->
+            <button type="button" class="btn btn-primary mt-3" id="test-modal-button">
+                Test Modal
+            </button>
+            
+            @endif
+        </div>
+        
+        <!-- Right Side Container -->
+        <div class="col-lg-4 col-md-5">
+            <div class="sticky-top" style="top: 80px;">
+                <!-- Section Content Viewer -->
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0" id="content-viewer-title">Section Content</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="section-content-display" class="p-2">
+                            <p class="text-muted">Click on any section heading to view its content here.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Droppable Area -->
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Notes & Annotations</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="droppable-area" class="p-3 border border-dashed" style="min-height: 150px; background: #f8f9fa;">
+                            <p class="text-muted text-center">Drag text here to make notes</p>
+                        </div>
+                        <textarea id="notes-area" class="form-control mt-3" rows="4" placeholder="Add your notes here..."></textarea>
+                        <button class="btn btn-primary w-100 mt-3">Save Notes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Content Viewer Modal -->
+    <div class="modal fade" id="contentViewerModal" tabindex="-1" aria-labelledby="contentViewerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contentViewerModalLabel">Section Content</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-content-display">
+                    <p>Modal content will load here</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('styles')
+<style>
+    .clickable-heading {
+        cursor: pointer;
+        color: #007bff;
+        transition: color 0.2s;
+    }
+    .clickable-heading:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+    .ref {
+        color: #28a745;
+        cursor: pointer;
+        font-weight: 600;
+        text-decoration: underline;
+        transition: all 0.2s;
+        padding: 0 2px;
+        border-radius: 3px;
+        position: relative;
+    }
+    .ref:hover {
+        color: #218838;
+        background-color: rgba(40, 167, 69, 0.1);
+    }
+    .ref:after {
+        content: " 🔍";
+        font-size: 10px;
+        vertical-align: super;
+    }
+    .section-btn {
+        font-size: 10px;
+        line-height: 1;
+        margin-left: 2px;
+        vertical-align: middle;
+    }
+    .legal-content {
+        padding-left: 1.5rem;
+        border-left: 1px solid #dee2e6;
+    }
+    .legal-section {
+        margin-bottom: 1rem;
+    }
+    .footnote {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-top: 0.5rem;
+    }
+    .section-content {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+    .section-item {
+        padding: 0.75rem;
+        border-radius: 0.25rem;
+        background-color: #f8f9fa;
+        margin-bottom: 1rem;
+    }
+    .legal-text-content {
+        line-height: 1.6;
+    }
+    .modal.draggable .modal-dialog {
+        cursor: move;
+    }
+    .modal-header.draggable {
+        cursor: move;
+        user-select: none;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script src="{{ asset('user_assets/js/legal-reference-popups.js') }}"></script>
+@endpush
+@endsection
