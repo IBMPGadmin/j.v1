@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
                 <input type="hidden" name="add_client" value="1">
                 <div class="row">    
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Add New Client..</h5>
+                        <h5 class="mb-0">Add New Client..65456456465</h5>
                         <!-- Move button inside form and make it a submit button -->
                         <button type="submit" class="btn add-client-btn btn-custom">Add New Client</button>
                     </div>
