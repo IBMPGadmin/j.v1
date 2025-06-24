@@ -13,6 +13,18 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+// Subscription routes
+Route::get('/pricing', [\App\Http\Controllers\SubscriptionController::class, 'showPricing'])->name('subscription.pricing');
+Route::get('/subscription/test-cards', [\App\Http\Controllers\SubscriptionController::class, 'testCards'])->name('subscription.test-cards');
+Route::get('/subscription/test-checkout', [\App\Http\Controllers\StripeTestController::class, 'testStripeCheckout'])->name('subscription.test-checkout');
+Route::get('/subscription/debug-stripe', [\App\Http\Controllers\StripeDebugController::class, 'checkConfig'])->name('subscription.debug-stripe');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/subscription/{package}/purchase', [\App\Http\Controllers\SubscriptionController::class, 'purchase'])->name('subscription.purchase');
+    Route::get('/subscription/success', [\App\Http\Controllers\SubscriptionController::class, 'success'])->name('subscription.success');
+    Route::get('/subscription/cancel', [\App\Http\Controllers\SubscriptionController::class, 'cancel'])->name('subscription.cancel');
+});
+
 // Admin-only routes
 Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Http\Middleware\AdminOnly::class])->group(function () {
     Route::get('/admin-dashboard', function () {
@@ -45,7 +57,7 @@ Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Ht
 });
 
 // User-only routes
-Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Http\Middleware\UserOnly::class])->group(function () {
+Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Http\Middleware\UserOnly::class, \App\Http\Middleware\CheckSubscription::class])->group(function () {
     Route::get('/user-dashboard', function () {
         return view('user-dashboard');
     })->name('user.dashboard');
@@ -89,6 +101,11 @@ Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Ht
     // Legal tables route
     Route::get('/user/client/{client}/legal-tables', [App\Http\Controllers\UserLegalTableController::class, 'show'])
         ->name('user.client.legal-tables');
+        
+    // Payment Details routes
+    Route::get('/payment/details', [App\Http\Controllers\PaymentDetailsController::class, 'index'])->name('payment.details');
+    Route::post('/payment/subscription/{id}/cancel', [App\Http\Controllers\PaymentDetailsController::class, 'cancelSubscription'])->name('payment.subscription.cancel');
+    Route::get('/payment/subscription/activate/{packageId}', [App\Http\Controllers\PaymentDetailsController::class, 'activateNewPackage'])->name('payment.subscription.activate');
 });
 
 Route::middleware(\App\Http\Middleware\Authenticate::class)->group(function () {

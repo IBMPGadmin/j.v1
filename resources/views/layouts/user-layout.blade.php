@@ -171,15 +171,7 @@
                     <span class="nav_name">Templates</span> 
                 </a> 
 
-                <a href="{{ route('profile.edit') }}" class="nav_link {{ request()->routeIs('profile.edit') ? 'active' : '' }}"> 
-                    <i class='bx bx-user nav_icon'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                        </svg>
-                    </i> 
-                    <span class="nav_name">Users</span> 
-                </a>                <a href="{{ route('user.government-links') }}" class="nav_link {{ request()->routeIs('user.government-links*') ? 'active' : '' }}"> 
+                           <a href="{{ route('user.government-links') }}" class="nav_link {{ request()->routeIs('user.government-links*') ? 'active' : '' }}"> 
                     <i class='bx bx-bookmark nav_icon'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
@@ -196,16 +188,28 @@
                     <span class="nav_name">Legal key Terms</span>
                 </a> 
 
-            
-
-                <a href="#" class="nav_link"> 
+                <a href="{{ route('payment.details') }}" class="nav_link {{ request()->routeIs('payment.details') ? 'active' : '' }}"> 
                     <i class='bx bx-bar-chart-alt-2 nav_icon'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
+                            <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z"/>
                         </svg>
                     </i> 
-                    <span class="nav_name">Stats</span> 
+                    <span class="nav_name">Payment Details</span> 
                 </a>
+
+          
+                  <a href="{{ route('profile.edit') }}" class="nav_link {{ request()->routeIs('profile.edit') ? 'active' : '' }}"> 
+                    <i class='bx bx-user nav_icon'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                        </svg>
+                    </i> 
+                    <span class="nav_name">Profile Details</span> 
+                </a> 
+
+
             </div>
 
             <a href="{{ route('logout') }}" 

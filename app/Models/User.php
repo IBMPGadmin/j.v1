@@ -46,4 +46,31 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the user's current subscription.
+     */
+    public function subscription()
+    {
+        return $this->hasOne(UserSubscription::class)->latest('id')->first();
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(UserSubscription::class);
+    }
+
+    public function activeSubscription()
+    {
+        return $this->subscriptions()
+            ->where(function($query) {
+                $query->where('status', 'active')
+                    ->orWhere(function ($query) {
+                        $query->where('status', 'trial')
+                            ->where('trial_ends_at', '>', now());
+                    });
+            })
+            ->latest('id')
+            ->first();
+    }
 }
