@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -24,15 +26,52 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = Auth::user();
+        
+        // Validate the input
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'unique:users,email,' . $user->id,
+            ],
+            'profile_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'remove_image' => ['nullable', 'boolean'],
+        ]);
+        
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Handle profile image upload
+        if ($request->hasFile('profile_image')) {
+            // Delete old image if it exists
+            if ($user->profile_image && File::exists(public_path($user->profile_image))) {
+                File::delete(public_path($user->profile_image));
+            }
+            
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('profile_images'), $imageName);
+            $user->profile_image = 'profile_images/' . $imageName;
+        } else if ($request->has('remove_image') && $request->remove_image) {
+            // Delete the current profile image if remove checkbox is selected
+            if ($user->profile_image && File::exists(public_path($user->profile_image))) {
+                File::delete(public_path($user->profile_image));
+            }
+            $user->profile_image = null;
         }
 
-        $request->user()->save();
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

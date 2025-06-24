@@ -15,6 +15,43 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     
+    <style>
+    .profile-header-img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .profile-header-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .profile-header-placeholder {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        border: 2px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+    
+    .profile-header-placeholder:hover {
+        background-color: #dee2e6;
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    </style>
+    
     @php
     // Add this for pages that use TinyMCE
     if (session_status() == PHP_SESSION_NONE) {
@@ -143,9 +180,16 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="header_img"> 
-                <a href="{{ route('profile.edit') }}"><img src="{{ asset('user_assets/img/profile.jpg') }}" alt=""></a> 
+              <div class="header_img"> 
+                <a href="{{ route('profile.edit') }}" title="Edit Profile">
+                    @if(Auth::user() && Auth::user()->profile_image)
+                        <img src="{{ asset(Auth::user()->profile_image) }}" alt="{{ Auth::user()->name }}'s Profile" class="profile-header-img">
+                    @else
+                        <div class="profile-header-placeholder">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                    @endif
+                </a> 
             </div>
         </div>
     </header>

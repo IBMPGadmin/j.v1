@@ -76,4 +76,24 @@ class UserSubscription extends Model
     {
         return $this->status === 'expired';
     }
+
+    /**
+     * Check if the subscription is expired
+     *
+     * @return bool
+     */
+    public function isExpired()
+    {
+        return $this->status === 'expired' || ($this->expires_at && $this->expires_at < now());
+    }
+
+    /**
+     * Check if the subscription is canceled
+     *
+     * @return bool
+     */
+    public function isCanceled()
+    {
+        return $this->status === 'canceled' || $this->status === 'cancelled';
+    }
 }

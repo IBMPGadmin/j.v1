@@ -20,10 +20,8 @@ class SubscriptionPackage extends Model
         'price' => 'decimal:2',
         'features' => 'array',
         'is_active' => 'boolean'
-    ];
-
-    public function subscriptions()
+    ];    public function subscriptions()
     {
-        return $this->hasMany(UserSubscription::class, 'package_id');
+        return $this->hasMany(UserSubscription::class, 'subscription_package_id');
     }
 }

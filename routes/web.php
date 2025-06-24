@@ -27,9 +27,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Admin-only routes
 Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Http\Middleware\AdminOnly::class])->group(function () {
-    Route::get('/admin-dashboard', function () {
-        return view('admin-dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin-dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Admin: Add new user page and store
     Route::get('/admin/users/add', [UserController::class, 'create'])->name('admin.users.add');
@@ -37,8 +35,18 @@ Route::middleware([\App\Http\Middleware\Authenticate::class, 'verified', \App\Ht
 
     // All users page
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/{user}', [UserController::class, 'show'])->name('admin.users.show');
     Route::patch('/admin/users/{user}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.delete');
+
+    // Payment Dashboard
+    Route::get('/admin/payments', [\App\Http\Controllers\Admin\PaymentDetailsController::class, 'index'])->name('admin.payments.index');
+    Route::get('/admin/payments/export', [\App\Http\Controllers\Admin\PaymentDetailsController::class, 'export'])->name('admin.payments.export');
+    Route::get('/admin/payments/{subscription}', [\App\Http\Controllers\Admin\PaymentDetailsController::class, 'show'])->name('admin.payments.view');
+    
+    // Users Report
+    Route::get('/admin/reports/users', [\App\Http\Controllers\Admin\UserReportController::class, 'index'])->name('admin.reports.users');
+    Route::get('/admin/reports/users/export', [\App\Http\Controllers\Admin\UserReportController::class, 'export'])->name('admin.reports.users.export');
 
     // Government Links routes
     Route::prefix('admin')->name('admin.')->group(function () {

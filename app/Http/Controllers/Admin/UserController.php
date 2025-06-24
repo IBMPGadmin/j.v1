@@ -36,10 +36,58 @@ class UserController extends Controller
     }
 
     // Show all users
-    public function index()
+    public function index(Request $request)
     {
-        $users = \App\Models\User::orderByDesc('created_at')->get();
+        $query = User::query();
+        
+        // Search by name, email or role
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                  ->orWhere('email', 'like', "%{$searchTerm}%");
+            });
+        }
+        
+        // Filter by role
+        if ($request->has('role') && $request->role != '') {
+            $query->where('role', $request->role);
+        }
+        
+        // Filter by status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+        
+        // Filter by date range
+        if ($request->has('start_date') && $request->start_date) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+        
+        if ($request->has('end_date') && $request->end_date) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+        
+        // Order by
+        $orderBy = $request->order_by ?? 'created_at';
+        $orderDirection = $request->order_direction ?? 'desc';
+        $query->orderBy($orderBy, $orderDirection);
+        
+        // Get users with pagination
+        $users = $query->paginate(15)->withQueryString();
+        
         return view('admin.users.index', compact('users'));
+    }
+
+    // Show user details
+    public function show($id)
+    {
+        $user = User::with('subscriptions.package')->findOrFail($id);
+        
+        // Get subscription status
+        $activeSubscription = $user->activeSubscription();
+        
+        return view('admin.users.show', compact('user', 'activeSubscription'));
     }
 
     // Toggle user active/deactive

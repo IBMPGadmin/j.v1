@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RCICDeadlineSeeder::class,
             LegalKeyTermsTableSeeder::class,
             SubscriptionPackageSeeder::class,
+            DashboardDemoDataSeeder::class,
         ]);
     }
 }

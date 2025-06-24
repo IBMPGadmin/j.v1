@@ -81,44 +81,48 @@
       </a>
     </div>
     <div class="navbar-content">
-      <ul class="pc-navbar">
+      <ul class="pc-navbar">        
         <li class="pc-item">
-          <a href="#" class="pc-link">
+          <a href="{{ route('admin.dashboard') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
             <span class="pc-mtext">Dashboard</span>
           </a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">Users</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-users"></i></span><span class="pc-mtext">Users</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
           <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="/admin/users/add">Add new Users</a></li>
-            <li class="pc-item"><a class="pc-link" href="/admin/users">All Users</a></li>
+            <li class="pc-item"><a class="pc-link" href="/admin/users/add"><i class="ti ti-user-plus me-2"></i>Add new Users</a></li>
+            <li class="pc-item"><a class="pc-link" href="/admin/users"><i class="ti ti-list me-2"></i>All Users</a></li>
           </ul>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">Legal Documents</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-file-text"></i></span><span class="pc-mtext">Legal Documents</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
           <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="/admin/legal-documents/add">Add Legal Documents</a></li>
-            <li class="pc-item"><a class="pc-link" href="#">All Legal Documents</a></li>
-            <li class="pc-item"><a class="pc-link" href="#">Add Forms & Schedule</a></li>
-          </ul>
-        </li>        <li class="pc-item pc-hasmenu">          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">Resource pages</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-          <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="{{ route('admin.government-links.index') }}">Government Links</a></li>
-            <li class="pc-item"><a class="pc-link" href="{{ route('admin.rcic-deadlines.index') }}">RCIC Deadlines</a></li>
-            <li class="pc-item"><a class="pc-link" href="{{ route('admin.legal-key-terms.index') }}">Legal key terms</a></li>
+            <li class="pc-item"><a class="pc-link" href="/admin/legal-documents/add"><i class="ti ti-file-plus me-2"></i>Add Legal Documents</a></li>
+            <li class="pc-item"><a class="pc-link" href="#"><i class="ti ti-files me-2"></i>All Legal Documents</a></li>
+            <li class="pc-item"><a class="pc-link" href="#"><i class="ti ti-forms me-2"></i>Add Forms & Schedule</a></li>
           </ul>
         </li>
-
-
-
-
         <li class="pc-item pc-hasmenu">
-          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">All Reports</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-link"></i></span><span class="pc-mtext">Resource pages</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
           <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="#">Payments</a></li>
-            <li class="pc-item"><a class="pc-link" href="#">Users</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.government-links.index') }}"><i class="ti ti-building-bank me-2"></i>Government Links</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.rcic-deadlines.index') }}"><i class="ti ti-calendar-event me-2"></i>RCIC Deadlines</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.legal-key-terms.index') }}"><i class="ti ti-vocabulary me-2"></i>Legal key terms</a></li>
           </ul>
+        </li>
+        <li class="pc-item pc-hasmenu">
+          <a href="#" class="pc-link"><span class="pc-micon"><i class="ti ti-report"></i></span><span class="pc-mtext">All Reports</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.payments.index') }}"><i class="ti ti-receipt me-2"></i>Payment Dashboard</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route('admin.reports.users') }}"><i class="ti ti-user-search me-2"></i>Users Report</a></li>
+          </ul>
+        </li>
+        <li class="pc-item">
+          <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-logout"></i></span>
+            <span class="pc-mtext">Logout</span>
+          </a>
+          <form id="sidebar-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
         </li>
       </ul>
     </div>
@@ -135,9 +139,14 @@
           <form class="header-search"><i data-feather="search" class="icon-search"></i><input type="search" class="form-control" placeholder="Search here..."></form>
         </li>
       </ul>
-    </div>
-    <div class="ms-auto">
+    </div>    <div class="ms-auto">
       <ul class="list-unstyled">
+        <li class="pc-h-item">
+          <a href="{{ route('logout') }}" class="pc-head-link me-2 btn btn-danger btn-sm text-white" onclick="event.preventDefault(); document.getElementById('header-logout-form').submit();">
+            <i class="ti ti-logout me-1"></i> Logout
+          </a>
+          <form id="header-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        </li>
         <li class="dropdown pc-h-item header-user-profile">
           <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
             <span>{{ Auth::user()->name ?? 'Admin' }}</span>
@@ -160,17 +169,16 @@
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="drp-t2" data-bs-toggle="tab" data-bs-target="#drp-tab-2" type="button" role="tab"><i class="ti ti-settings"></i> Setting</button>
               </li>
-            </ul>
-            <div class="tab-content">
+            </ul>            <div class="tab-content">
               <div class="tab-pane fade show active" id="drp-tab-1">
-                <a href="#" class="dropdown-item"><i class="ti ti-edit-circle"></i><span>Edit Profile</span></a>
-                <a href="#" class="dropdown-item"><i class="ti ti-user"></i><span>View Profile</span></a>
-                <a href="#" class="dropdown-item"><i class="ti ti-wallet"></i><span>Billing</span></a>
-                <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ti ti-power"></i><span>Logout</span></a>
+                <a href="#" class="dropdown-item"><i class="ti ti-edit-circle me-2"></i><span>Edit Profile</span></a>
+                <a href="#" class="dropdown-item"><i class="ti ti-user me-2"></i><span>View Profile</span></a>
+                <a href="#" class="dropdown-item"><i class="ti ti-wallet me-2"></i><span>Billing</span></a>
+                <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ti ti-logout me-2"></i><span>Logout</span></a>
               </div>
               <div class="tab-pane fade" id="drp-tab-2">
-                <a href="#" class="dropdown-item"><i class="ti ti-help"></i><span>Support</span></a>
-                <a href="#" class="dropdown-item"><i class="ti ti-lock"></i><span>Privacy Center</span></a>
+                <a href="#" class="dropdown-item"><i class="ti ti-help me-2"></i><span>Support</span></a>
+                <a href="#" class="dropdown-item"><i class="ti ti-lock me-2"></i><span>Privacy Center</span></a>
               </div>
             </div>
           </div>
@@ -194,10 +202,7 @@
     </div>
   </div>
 </footer>
-<!-- [Page Specific JS] start -->
-<script src="{{ asset('admin_assets/js/plugins/apexcharts.min.js') }}"></script>
-<script src="{{ asset('admin_assets/js/pages/dashboard-default.js') }}"></script>
-<!-- [Page Specific JS] end -->
+
 <!-- Required Js -->
 <script src="{{ asset('admin_assets/js/plugins/popper.min.js') }}"></script>
 <script src="{{ asset('admin_assets/js/plugins/simplebar.min.js') }}"></script>
@@ -205,6 +210,9 @@
 <script src="{{ asset('admin_assets/js/fonts/custom-font.js') }}"></script>
 <script src="{{ asset('admin_assets/js/pcoded.js') }}"></script>
 <script src="{{ asset('admin_assets/js/plugins/feather.min.js') }}"></script>
+
+@stack('scripts')
+
 <script>layout_change('light');</script>
 <script>change_box_container('false');</script>
 <script>layout_rtl_change('false');</script>
